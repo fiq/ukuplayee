@@ -1,4 +1,6 @@
 .fret {
     width: 24.5%;
-    border-bottom: 10px solid #424036;
+    /**border-bottom: 10px solid #424036;**/
+    background-image: url("../style/fret.jpg");
+    background-size: contain;
 }
