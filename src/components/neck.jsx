@@ -11,7 +11,7 @@ const Neck = () => {
         for (let fret = 1; fret <= maxFrets; fret++) {
             for (let string = 4; string > 0; string--) {
 
-                console.log(`ooo ${string} ${fret}`);
+                console.log(`hammer on ${string} ${fret}`);
 
                 frets.push(<Fret string={string} fret={fret} />)
             }
