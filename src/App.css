@@ -1,9 +1,14 @@
+body {
+  background-image: linear-gradient(to bottom right, rgb(192, 112, 55), rgba(44, 18, 1, 0.801));
+}
+
 .App {
   text-align: center;
+  background-color: brown;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 6vmin;
   pointer-events: none;
 }
 
@@ -15,7 +20,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 6vh;
   display: flex;
   flex-direction: column;
   align-items: center;
