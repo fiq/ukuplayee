@@ -8,7 +8,6 @@ const Ukulele = (props) => {
     return (
         <div className="ukulele">
             <Neck/>
-            <SoundHole/>
         </div>
     )
 }

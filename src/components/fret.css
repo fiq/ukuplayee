@@ -4,3 +4,11 @@
     background-image: url("../style/fret.jpg");
     background-size: contain;
 }
+
+
+.fret-open {
+    width: 24.5%;
+    border-bottom: 10px solid #424036;
+    min-height: 200px;
+    z-index: 5;    
+}

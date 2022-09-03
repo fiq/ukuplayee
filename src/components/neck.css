@@ -1,8 +1,4 @@
 .neck {
- /*   display: grid; 
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 2fr;
-    */
     background-image: linear-gradient(to bottom right, rgb(192, 112, 55), rgba(44, 18, 1, 0.801));
     display: flex;
     flex-wrap: wrap;

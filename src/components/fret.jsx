@@ -8,7 +8,7 @@ const Fret = (props) => {
 
     const note = getNoteName(props["string"], props["fret"]);
     return (
-        <div className="fret" onClick={()=>Generator.play(props["string"], props["fret"])}>
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={()=>Generator.play(props["string"], props["fret"])} onTouchMove={()=>Generator.play(props["string"], props["fret"])}>
             {note}
             <Acquila/>
         </div>
