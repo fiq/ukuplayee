@@ -7,14 +7,46 @@ const fretboard = [
     ["G4", "G#4", "A4", "A#4", "B4", "C4"]
 ];
 
+
+const buildSampler = (note) => new Tone.Sampler({
+    urls: {
+        [note]: `/samples/${note}.mp3`,
+    }
+}).toDestination();
+
+
+const stringSamplers = [
+    buildSampler("A4"),
+    buildSampler("E4"),
+    buildSampler("C4"),
+    buildSampler("G4"),
+];
+
+
+
+export const getNoteName = (string, fret) => fretboard[string-1][fret];
+
 export const play = (string, fret) => {
+    console.log(`playing sample of ${string} at fred ${fret}`);
+    Tone.start();
+    const pluck = new Tone.PluckSynth().toDestination();
+    const note = getNoteName(string, fret)
+    // TODO: Establish if this should be 8n
+    stringSamplers[string-1].triggerAttackRelease(note, "8n");
+    pluck.triggerAttack(note, Tone.now());
+    pluck.triggerRelease(Tone.now() + 0.5);
+}
+
+
+export const playSynth = (string, fret) => {
     console.log(`playing ${string} at fred ${fret}`);
     Tone.start();
     const synthPluck = new Tone.PolySynth().toDestination();
     const synth = new Tone.PluckSynth().toDestination();
-    //synthPluck.triggerAttackRelease(fretboard[string-1][fret], "8n");
-    synthPluck.triggerAttackRelease(fretboard[string-1][fret], "0.5");
+    const note = getNoteName(string, fret);
+    // TODO: Establish if this should be 8n
+    synthPluck.triggerAttackRelease(note, "0.5");
 
-    synth.triggerAttack(fretboard[string-1][fret], Tone.now());
+    synth.triggerAttack(note, Tone.now());
     synth.triggerRelease(Tone.now() + 0.5);
 }
