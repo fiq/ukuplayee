@@ -1,7 +1,5 @@
 import React from "react"
 import Neck from "./neck"
-import SoundHole from "./sound-hole"
-
 
 const Ukulele = (props) => {
     
