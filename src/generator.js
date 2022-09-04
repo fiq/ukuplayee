@@ -27,7 +27,7 @@ const stringSamplers = [
 export const getNoteName = (string, fret) => fretboard[string-1][fret];
 
 export const play = (string, fret) => {
-    console.log(`playing sample of ${string} at fred ${fret}`);
+    console.log(`playing sample of ${string} at fret ${fret}`);
     Tone.start();
     const pluck = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret)
