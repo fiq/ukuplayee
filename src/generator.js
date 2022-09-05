@@ -26,13 +26,15 @@ const stringSamplers = [
 
 export const getNoteName = (string, fret) => fretboard[string-1][fret];
 
-export const play = (string, fret) => {
+export const play = (string, fret, args={})=> {
     console.log(`playing sample of ${string} at fret ${fret}`);
     Tone.start();
     const pluck = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret)
-    // TODO: Establish if this should be 8n
-    stringSamplers[string-1].triggerAttackRelease(note, "1n");
+    // FIXME: Unternary 
+    const duration = args.muted ? "16n" : "1n";
+
+    stringSamplers[string-1].triggerAttackRelease(note, duration);
     pluck.triggerAttack(note, Tone.now());
     pluck.triggerRelease(Tone.now() + 1);
 }
