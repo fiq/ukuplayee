@@ -32,9 +32,9 @@ export const play = (string, fret) => {
     const pluck = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret)
     // TODO: Establish if this should be 8n
-    stringSamplers[string-1].triggerAttackRelease(note, "8n");
+    stringSamplers[string-1].triggerAttackRelease(note, "1n");
     pluck.triggerAttack(note, Tone.now());
-    pluck.triggerRelease(Tone.now() + 0.5);
+    pluck.triggerRelease(Tone.now() + 1);
 }
 
 
