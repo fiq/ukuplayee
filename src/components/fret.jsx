@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import Acquila from "./acquila";
 import './fret.css'
 import * as Generator  from "../generator";
@@ -7,6 +7,7 @@ import strumContext from "./strum-context";
 
 
 const Fret = (props) => {
+    const [lastPlayed, setLastPlayed] = useState("[🎵]");
     const string = props["string"];
     const fret = props["fret"];
     const strumState = useContext(strumContext);
@@ -14,33 +15,62 @@ const Fret = (props) => {
     console.log(strumState);
     const note = getNoteName(props["string"], props["fret"]);
 
-    const play = (event) => {
-        console.log(event);
-        if (!props["isOpen"]) {
-            strumState.fretted[string].push(fret);
-            console.log(`fretting ${fret}`);
-            console.log(strumState);
-            Generator.play(props["string"], props["fret"], {muted:true});
+    const pressedFret = () => {
+        if (strumState.fretted[string].indexOf(fret) !== -1) {
+            console.debug("Avoid double hammering"); //fix me
             return;
-        } 
-        
-        Generator.play(props["string"], props["fret"]);
+        }
+        strumState.fretted[string].push(fret);
+        console.log(`fretting ${fret}`);
+        console.log(strumState);
+        Generator.play(props["string"], props["fret"], { muted: true });
+        return;
     };
 
-    const release =  (event) => {
+    const getFretToStrum = () => {
+        // closest pressed frets
+        const frets = strumState.fretted[string].sort((a,b)=>b-a);
+        console.log("Sorted frets");
+        console.log(frets);
+        if (frets.length) {
+            return frets[0];
+        }
+        // default to an open string
+        return fret;
+    };
+
+    const play = async (event) => {
         console.log(event);
         if (!props["isOpen"]) {
-            const pressedFretIndex = strumState.fretted[string].indexOf(fret);
-            if (-1 !== pressedFretIndex) {
-                // mutation warning
-                strumState.fretted[string].splice(pressedFretIndex-1, 1);
-            }
+            return pressedFret();
+        } 
+
+        // check for fretted notes on this string
+        const playFret = getFretToStrum();
+        setLastPlayed(`🎵${Generator.getNoteName(string, playFret)}🎵`);
+        releaseFret(string, playFret);
+        Generator.play(string, playFret);
+    };
+
+    const releaseFret = (string, fret) => {
+        const pressedFretIndex = strumState.fretted[string].indexOf(fret);
+        if (-1 !== pressedFretIndex) {
+            console.debug(`Releasing fret ${fret} on string ${string}`);
+            // mutation warning
+            strumState.fretted[string].splice(pressedFretIndex - 1, 1);
+        }
+    }
+
+    const liftFinger =  (event) => {
+        console.log(event);
+        if (!props["isOpen"]) {
+            releaseFret(string, fret);
         }
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={play} onTouchMove={play} onTouchEnd={release}>
-            {note}
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={play} onTouchMove={play} onTouchEnd={liftFinger}>
+            {note} {!props["isOpen"] || lastPlayed}
             <Acquila/>
         </div>
     )
