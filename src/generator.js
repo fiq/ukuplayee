@@ -33,20 +33,16 @@ export const play = async (string, fret, args={})=> {
     // FIXME: Unternary 
     const duration = args.muted ? "32n" : "1n";
 
-
-    const filter = new Tone.AutoFilter(4).start();
-    const distortion = new Tone.Distortion(0.5);
     const envelope = new Envelope({
 		sustain: 0.2,
      });
-     stringSamplers[string-1].triggerAttackRelease(note, duration).chain(filter, distortion, envelope);
+     stringSamplers[string-1].triggerAttackRelease(note, duration);
 
     if (!args.muted) {
         pluck.triggerAttack(note, Tone.now());
-        pluck.triggerRelease(Tone.now() + 1);
+        pluck.triggerRelease(Tone.now() + 1).chain(envelope);
     }
 }
-
 
 export const playSynth = (string, fret) => {
     console.log(`playing ${string} at fred ${fret}`);
