@@ -1,4 +1,5 @@
 import * as Tone from "tone";
+import { Envelope } from "tone";
 //FIX ME - GCEA to be calculated based on tuning
 const fretboard = [
     ["A4", "A#4", "B4", "C4", "C#4", "D4"],
@@ -32,7 +33,13 @@ export const play = async (string, fret, args={})=> {
     // FIXME: Unternary 
     const duration = args.muted ? "32n" : "1n";
 
-    stringSamplers[string-1].triggerAttackRelease(note, duration);
+
+    const filter = new Tone.AutoFilter(4).start();
+    const distortion = new Tone.Distortion(0.5);
+    const envelope = new Envelope({
+		sustain: 0.2,
+     });
+     stringSamplers[string-1].triggerAttackRelease(note, duration).chain(filter, distortion, envelope);
 
     if (!args.muted) {
         pluck.triggerAttack(note, Tone.now());
