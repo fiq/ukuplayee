@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { Envelope } from "tone";
+import { Envelope, PolySynth, Volume } from "tone";
 //FIX ME - GCEA to be calculated based on tuning
 const fretboard = [
     ["A4", "A#4", "B4", "C4", "C#4", "D4"],
@@ -29,18 +29,17 @@ export const play = async (string, fret, args={})=> {
     console.log(`playing sample of ${string} at fret ${fret}`);
     await Tone.start();
     const pluck = new Tone.PluckSynth().toDestination();
+    const poly = new PolySynth().toDestination();
     const note = getNoteName(string, fret)
     // FIXME: Unternary 
     const duration = args.muted ? "32n" : "1n";
-
-    const envelope = new Envelope({
-		sustain: 0.2,
-     });
-     stringSamplers[string-1].triggerAttackRelease(note, duration);
+    stringSamplers[string-1].triggerAttackRelease(note, duration);
 
     if (!args.muted) {
+        const volume = new Volume(1);
+        poly.triggerAttackRelease(note, "8n").volume(volume);
         pluck.triggerAttack(note, Tone.now());
-        pluck.triggerRelease(Tone.now() + 1).chain(envelope);
+        pluck.triggerRelease(Tone.now() + 1);
     }
 }
 
@@ -50,8 +49,9 @@ export const playSynth = (string, fret) => {
     const synthPluck = new Tone.PolySynth().toDestination();
     const synth = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret);
+    const volume = new Volume(3);
     // TODO: Establish if this should be 8n
-    synthPluck.triggerAttackRelease(note, "0.5");
+    synthPluck.triggerAttackRelease(note, "0.5").volume(volume);
 
     synth.triggerAttack(note, Tone.now());
     synth.triggerRelease(Tone.now() + 0.5);
