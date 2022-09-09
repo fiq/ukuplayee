@@ -39,15 +39,3 @@ export const play = async (string, fret, args={})=> {
     }
 }
 
-export const playSynth = (string, fret) => {
-    console.log(`playing ${string} at fred ${fret}`);
-    Tone.start();
-    const synthPoly = new Tone.PolySynth().toDestination();
-    const synthPluck = new Tone.PluckSynth().toDestination();
-    const note = getNoteName(string, fret);
-    // TODO: Establish if this should be 8n
-    synthPluck.triggerAttackRelease(note, "1n");
-
-    //synthPoly.triggerAttack(note, Tone.now());
-    //synthPoly.triggerRelease(Tone.now() + 0.5);
-}
