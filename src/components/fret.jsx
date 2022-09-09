@@ -47,6 +47,7 @@ const Fret = (props) => {
     };
 
     const releaseFret = (string, fret) => {
+        console.log("releasing string")
         const pressedFretIndex = strumState.fretted[string].indexOf(fret);
         if (-1 !== pressedFretIndex) {
             console.debug(`Releasing fret ${fret} on string ${string}`);
@@ -62,12 +63,11 @@ const Fret = (props) => {
         if (props["isOpen"]) {
             return;
         }
-        console.debug("Debouncing release fret");
         releaseCurrentFret();
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret}>
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
             {note} {!props["isOpen"] || lastPlayed}
             <Acquila/>
         </div>
