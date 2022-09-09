@@ -48,7 +48,7 @@ export const playSynth = (string, fret) => {
     const synth = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret);
     // TODO: Establish if this should be 8n
-    synthPluck.triggerAttackRelease(note, "0.5");
+    synthPluck.triggerAttackRelease(note, "1n");
 
     synth.triggerAttack(note, Tone.now());
     synth.triggerRelease(Tone.now() + 0.5);
