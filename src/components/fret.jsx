@@ -4,8 +4,9 @@ import './fret.css'
 import * as Generator  from "../generator";
 import { getNoteName } from "../generator";
 import strumContext from "./strum-context";
-import { debounce } from "underscore";
+import { debounce, indexOf } from "underscore";
 
+// FIXME - add a string parent to reduce complexity
 const Fret = (props) => {
     const [lastPlayed, setLastPlayed] = useState("[🎵]");
     const string = props["string"];
@@ -14,11 +15,13 @@ const Fret = (props) => {
     const note = getNoteName(props["string"], props["fret"]);
 
     const pressedFret = debounce(() => {
-        strumState.fretted[string].push(fret);
-        console.debug(`fretting ${fret}`);
-        console.debug(strumState);
-        //Generator.play(props["string"], props["fret"], { muted: true });
-        return;
+        if (-1 == strumState.fretted[string].indexOf(fret)) {
+            strumState.fretted[string].push(fret);
+            console.debug(`fretting ${fret}`);
+            console.debug(strumState);
+            Generator.play(props["string"], props["fret"], { muted: true });
+            setTimeout(releaseCurrentFret, 1000);
+        }
     }, 200);
 
     const getFretToStrum = () => {
@@ -42,7 +45,6 @@ const Fret = (props) => {
         // check for fretted notes on this string
         const playFret = getFretToStrum();
         setLastPlayed(`[${Generator.getNoteName(string, playFret)}🎵]`);
-        releaseFret(string, playFret);
         Generator.play(string, playFret);
     };
 
@@ -58,7 +60,7 @@ const Fret = (props) => {
 
     const debouncePlay = debounce(play, 5, true);
 
-    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 500, true);
+    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 250, true);
     const debounceReleaseFret = () => {
         if (props["isOpen"]) {
             return;
@@ -67,7 +69,7 @@ const Fret = (props) => {
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret}>
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
             {note} {!props["isOpen"] || lastPlayed}
             <Acquila/>
         </div>
