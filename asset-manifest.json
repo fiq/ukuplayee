@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/ukuplayee/static/css/main.c61e45c5.css",
-    "main.js": "/ukuplayee/static/js/main.dba5125b.js",
+    "main.js": "/ukuplayee/static/js/main.10ffe64c.js",
     "static/js/787.e5f61659.chunk.js": "/ukuplayee/static/js/787.e5f61659.chunk.js",
     "static/media/fret.jpg": "/ukuplayee/static/media/fret.925955cf3e6c734ad394.jpg",
     "static/media/logo.svg": "/ukuplayee/static/media/logo.77ee1491d5865d70e9669fe0927d8f34.svg",
     "index.html": "/ukuplayee/index.html",
     "main.c61e45c5.css.map": "/ukuplayee/static/css/main.c61e45c5.css.map",
-    "main.dba5125b.js.map": "/ukuplayee/static/js/main.dba5125b.js.map",
+    "main.10ffe64c.js.map": "/ukuplayee/static/js/main.10ffe64c.js.map",
     "787.e5f61659.chunk.js.map": "/ukuplayee/static/js/787.e5f61659.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c61e45c5.css",
-    "static/js/main.dba5125b.js"
+    "static/js/main.10ffe64c.js"
   ]
 }
