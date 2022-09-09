@@ -36,8 +36,7 @@ export const play = async (string, fret, args={})=> {
     stringSamplers[string-1].triggerAttackRelease(note, duration);
 
     if (!args.muted) {
-        const volume = new Volume(1);
-        poly.triggerAttackRelease(note, "8n").volume(volume);
+        poly.triggerAttackRelease(note, "8n");
         pluck.triggerAttack(note, Tone.now());
         pluck.triggerRelease(Tone.now() + 1);
     }
@@ -49,9 +48,8 @@ export const playSynth = (string, fret) => {
     const synthPluck = new Tone.PolySynth().toDestination();
     const synth = new Tone.PluckSynth().toDestination();
     const note = getNoteName(string, fret);
-    const volume = new Volume(3);
     // TODO: Establish if this should be 8n
-    synthPluck.triggerAttackRelease(note, "0.5").volume(volume);
+    synthPluck.triggerAttackRelease(note, "0.5");
 
     synth.triggerAttack(note, Tone.now());
     synth.triggerRelease(Tone.now() + 0.5);
