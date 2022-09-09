@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { Envelope, PolySynth, Volume } from "tone";
+import { PolySynth, Volume } from "tone";
 //FIX ME - GCEA to be calculated based on tuning
 const fretboard = [
     ["A4", "A#4", "B4", "C4", "C#4", "D4"],
