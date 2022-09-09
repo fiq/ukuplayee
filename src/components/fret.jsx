@@ -14,10 +14,6 @@ const Fret = (props) => {
     const note = getNoteName(props["string"], props["fret"]);
 
     const pressedFret = () => {
-        if (strumState.fretted[string].indexOf(fret) !== -1) {
-            console.debug("Avoid double hammering"); //fix me
-            return;
-        }
         strumState.fretted[string].push(fret);
         console.debug(`fretting ${fret}`);
         console.debug(strumState);
