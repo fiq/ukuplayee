@@ -1,7 +1,7 @@
 .fret {
     width: 24.5%;
-    min-height: 100px;
-    /**border-bottom: 10px solid #424036;**/
+    min-height: 90px;
+    border-bottom: 10px solid #424036;
     background-image: url("../style/fret.jpg");
     background-size: contain;
 }
