@@ -61,9 +61,9 @@ const Fret = (props) => {
         }
     };
 
-    const debouncePlay = debounce(play, 10, true);
+    const debouncePlay = debounce(play, 200, true);
 
-    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 50, true);
+    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 200, true);
     const debounceReleaseFret = () => {
         if (props["isOpen"]) {
             return;
