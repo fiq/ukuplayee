@@ -4,7 +4,7 @@ import './fret.css'
 import * as Generator  from "../generator";
 import { getNoteName } from "../generator";
 import strumContext from "./strum-context";
-
+import { debounce } from "underscore";
 
 const Fret = (props) => {
     const [lastPlayed, setLastPlayed] = useState("[🎵]");
@@ -53,23 +53,29 @@ const Fret = (props) => {
     };
 
     const releaseFret = (string, fret) => {
+        console.log("Releasing")
         const pressedFretIndex = strumState.fretted[string].indexOf(fret);
         if (-1 !== pressedFretIndex) {
             console.debug(`Releasing fret ${fret} on string ${string}`);
             // mutation warning
             strumState.fretted[string].splice(pressedFretIndex - 1, 1);
         }
-    }
+    };
 
-    const liftFinger =  (event) => {
-        console.log(event);
-        if (!props["isOpen"]) {
-            releaseFret(string, fret);
+    const debouncePlay = debounce(play, 10, true);
+
+    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 100, true);
+
+    const debounceReleaseFret = () => {
+        if (props["isOpen"]) {
+            return;
         }
+        console.log("Debouncing release fret");
+        debounce(releaseCurrentFret, 100, true);
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={play} onTouchMove={play} onTouchEnd={liftFinger}>
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret}>
             {note} {!props["isOpen"] || lastPlayed}
             <Acquila/>
         </div>
