@@ -25,17 +25,9 @@ export const getNoteName = (string, fret) => fretboard[string-1][fret];
 export const play = async (string, fret, args={})=> {
     console.log(`playing sample of ${string} at fret ${fret}`);
     await Tone.start();
-    const pluck = new Tone.PluckSynth().toDestination();
-    const poly = new Tone.PolySynth().toDestination();
     const note = getNoteName(string, fret)
     // FIXME: Unternary 
     const duration = args.muted ? "32n" : "1n";
-    stringSamplers[string-1].triggerAttackRelease(note, duration);
-
-    if (!args.muted) {
-        poly.triggerAttackRelease(note, "32n");
-        pluck.triggerAttack(note, Tone.now());
-        pluck.triggerRelease(Tone.now() + 1);
-    }
+    stringSamplers[string-1].triggerAttackRelease(note, duration)   
 }
 

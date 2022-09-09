@@ -13,13 +13,13 @@ const Fret = (props) => {
     const strumState = useContext(strumContext);
     const note = getNoteName(props["string"], props["fret"]);
 
-    const pressedFret = () => {
+    const pressedFret = debounce(() => {
         strumState.fretted[string].push(fret);
         console.debug(`fretting ${fret}`);
         console.debug(strumState);
-        Generator.play(props["string"], props["fret"], { muted: true });
+        //Generator.play(props["string"], props["fret"], { muted: true });
         return;
-    };
+    }, 200);
 
     const getFretToStrum = () => {
         // closest pressed frets
@@ -67,7 +67,7 @@ const Fret = (props) => {
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
+        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret}>
             {note} {!props["isOpen"] || lastPlayed}
             <Acquila/>
         </div>
