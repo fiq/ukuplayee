@@ -11,8 +11,6 @@ const Fret = (props) => {
     const string = props["string"];
     const fret = props["fret"];
     const strumState = useContext(strumContext);
-    console.log("state");
-    console.log(strumState);
     const note = getNoteName(props["string"], props["fret"]);
 
     const pressedFret = () => {
@@ -21,8 +19,8 @@ const Fret = (props) => {
             return;
         }
         strumState.fretted[string].push(fret);
-        console.log(`fretting ${fret}`);
-        console.log(strumState);
+        console.debug(`fretting ${fret}`);
+        console.debug(strumState);
         Generator.play(props["string"], props["fret"], { muted: true });
         return;
     };
@@ -30,8 +28,8 @@ const Fret = (props) => {
     const getFretToStrum = () => {
         // closest pressed frets
         const frets = strumState.fretted[string].sort((a,b)=>b-a);
-        console.log("Sorted frets");
-        console.log(frets);
+        console.debug("Sorted frets");
+        console.debug(frets);
         if (frets.length) {
             return frets[0];
         }
@@ -40,7 +38,7 @@ const Fret = (props) => {
     };
 
     const play = async (event) => {
-        console.log(event);
+        console.debug(event);
         if (!props["isOpen"]) {
             return pressedFret();
         } 
@@ -61,14 +59,14 @@ const Fret = (props) => {
         }
     };
 
-    const debouncePlay = debounce(play, 200, true);
+    const debouncePlay = debounce(play, 100, true);
 
-    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 200, true);
+    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 100, true);
     const debounceReleaseFret = () => {
         if (props["isOpen"]) {
             return;
         }
-        console.log("Debouncing release fret");
+        console.debug("Debouncing release fret");
         releaseCurrentFret();
     };
 
