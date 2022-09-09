@@ -47,7 +47,7 @@ const Fret = (props) => {
 
         // check for fretted notes on this string
         const playFret = getFretToStrum();
-        setLastPlayed(`🎵${Generator.getNoteName(string, playFret)}🎵`);
+        setLastPlayed(`[${Generator.getNoteName(string, playFret)}🎵]`);
         releaseFret(string, playFret);
         Generator.play(string, playFret);
     };
