@@ -53,7 +53,6 @@ const Fret = (props) => {
     };
 
     const releaseFret = (string, fret) => {
-        console.log("Releasing")
         const pressedFretIndex = strumState.fretted[string].indexOf(fret);
         if (-1 !== pressedFretIndex) {
             console.debug(`Releasing fret ${fret} on string ${string}`);
@@ -64,14 +63,13 @@ const Fret = (props) => {
 
     const debouncePlay = debounce(play, 10, true);
 
-    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 100, true);
-
+    const releaseCurrentFret = debounce(()=>releaseFret(string,fret), 50, true);
     const debounceReleaseFret = () => {
         if (props["isOpen"]) {
             return;
         }
         console.log("Debouncing release fret");
-        debounce(releaseCurrentFret, 100, true);
+        releaseCurrentFret();
     };
 
     return (
