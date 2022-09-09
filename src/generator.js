@@ -28,7 +28,7 @@ export const play = async (string, fret, args={})=> {
     console.log(`playing sample of ${string} at fret ${fret}`);
     await Tone.start();
     const pluck = new Tone.PluckSynth().toDestination();
-    const poly = new PolySynth().toDestination();
+    const poly = new Tone.PolySynth().toDestination();
     const note = getNoteName(string, fret)
     // FIXME: Unternary 
     const duration = args.muted ? "32n" : "1n";
