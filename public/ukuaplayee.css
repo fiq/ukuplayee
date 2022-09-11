@@ -1,6 +1,10 @@
 
+
 body {
   height: auto;
+  width: auto;
   max-height: 100vh;
+  max-width: 100vh;
   overflow: hidden;
+  margin: 0;
 }

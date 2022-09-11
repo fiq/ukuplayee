@@ -1,9 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import Ukulele from './components/ukulele';
+import {PreventOrientation} from 'prevent-orientation';
 
 function App() {
 
+  new PreventOrientation().preventLandscape();
   return (
     <div className="App">
       <header className="App-header">
