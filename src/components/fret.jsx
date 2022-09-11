@@ -69,8 +69,8 @@ const Fret = (props) => {
     };
 
     return (
-        <div className={props["isOpen"] ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
-            {note} {!props["isOpen"] || lastPlayed}
+        <div className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
+            { props.isOpen ? <p className="note-strum">{note} {lastPlayed}</p> : <p className="note-fret">{note}</p> }
             <Acquila/>
         </div>
     )

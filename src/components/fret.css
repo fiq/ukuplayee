@@ -13,3 +13,12 @@
     min-height: 200px;
     z-index: 5;    
 }
+
+.note-strum {
+    font-size: 0.65em;
+    font-weight: 700;
+}
+
+.note-fret {
+    font-size: 0.9em;
+}
