@@ -30,9 +30,8 @@ const Fret = (props) => {
 
         if ([!props.isOpen]) {
             console.debug(`fretting ${fret}`);
-
             debouncedPlay(props["string"], props["fret"], { muted: true });
-            setTimeout(releaseCurrentFret, 2000);    
+            //setTimeout(releaseCurrentFret, 4000);    
         }
     };
 
@@ -73,15 +72,22 @@ const Fret = (props) => {
         console.debug(strumContext.fretState);
     };
 
-    const debouncePlay = debounce(play, 100, true);
 
-    const releaseCurrentFret = debounce(async () => releaseFret(string, fret), 250, true);
+    const strum = (e) => {
+        e.preventDefault();
+        const touched = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+        touched.click();
+    };
+
+    const debouncePlay = debounce(play, props.isOpen? 5 : 400, true);
+
+    const releaseCurrentFret = debounce(async () => releaseFret(string, fret), 10, true);
     const debounceReleaseFret = () => {
         releaseCurrentFret();
     };
 
     return (
-        <div id={`fret-${fret}-string-${string}`} className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret} fret={fret} string={string}>
+        <div id={`fret-${fret}-string-${string}`} className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={strum} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret} fret={fret} string={string}>
             {props.isOpen ? <p className="note-strum">{note} {lastPlayed}</p> : <p className="note-fret">{note}</p>}
             <Acquila />
         </div>
