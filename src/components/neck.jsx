@@ -20,7 +20,6 @@ const Neck = (props) => {
             <div className="neck">
                 {renderFretBoard()}
             </div>
-
     );
 };
 

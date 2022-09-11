@@ -1,12 +1,16 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useContext} from "react";
 import "./sound-hole.css";
 import Fret from "./fret"
+import strumContext from "./strum-context";
+
+
 const SoundHole = (props, {children}) => {
 
     const canvasRef = useRef(null);
+    const strumState = useContext(strumContext);
 
     const renderOpenStrings = () => {
-        const maxFrets = props.maxFrets || 4;
+        const maxFrets = props.maxFrets || strumState.fretState.length();;
         const opens = [];
         for (let string = maxFrets; string > 0; string--) {
             opens.push(<Fret isOpen={true} string={string} fret={0} />)
