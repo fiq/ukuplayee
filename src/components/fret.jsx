@@ -14,6 +14,15 @@ const Fret = (props) => {
     const strumState = useContext(strumContext);
     const note = getNoteName(props["string"], props["fret"]);
 
+    const getFormattedNote = (displayString, displayFret) => {
+        return `[${Generator.getNoteName(displayString, displayFret)}🎵]`;
+    };
+
+    const debouncedPlay = debounce(async (string, fret, opts={}) => {
+        await Generator.play(string, fret, opts);
+        console.debug(`Completed strumming ${string} on ${note}`);        
+    }, 5);
+
     const pressFret = async () => {
         strumState.fretState[string-1][fret] = 1;
         console.debug(strumState);
@@ -22,7 +31,7 @@ const Fret = (props) => {
         if ([!props.isOpen]) {
             console.debug(`fretting ${fret}`);
 
-            await Generator.play(props["string"], props["fret"], { muted: true });
+            debouncedPlay(props["string"], props["fret"], { muted: true });
             setTimeout(releaseCurrentFret, 2000);    
         }
     };
@@ -38,7 +47,7 @@ const Fret = (props) => {
     };
 
     const play = async (event) => {
-        console.debug(event);
+        console.log(event);
         await pressFret();
         if (!props.isOpen) {
             return;
@@ -53,25 +62,26 @@ const Fret = (props) => {
             return;
         }
 
-        setLastPlayed(`[${Generator.getNoteName(string, playFret)}🎵]`);
-        Generator.play(string, playFret);
+        setLastPlayed(getFormattedNote(string, playFret));
+        debouncedPlay(string, playFret);
     };
 
     const releaseFret = (string, fret) => {
         strumState.fretState[string-1][fret] = 0;
+        setLastPlayed(getFormattedNote(string, 0));
         console.debug(`Released fret ${fret} on string ${string}`);
         console.debug(strumContext.fretState);
     };
 
-    const debouncePlay = debounce(play, 5, true);
+    const debouncePlay = debounce(play, 100, true);
 
-    const releaseCurrentFret = debounce(() => releaseFret(string, fret), 250, true);
+    const releaseCurrentFret = debounce(async () => releaseFret(string, fret), 250, true);
     const debounceReleaseFret = () => {
         releaseCurrentFret();
     };
 
     return (
-        <div className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret}>
+        <div id={`fret-${fret}-string-${string}`} className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={debouncePlay} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret} fret={fret} string={string}>
             {props.isOpen ? <p className="note-strum">{note} {lastPlayed}</p> : <p className="note-fret">{note}</p>}
             <Acquila />
         </div>
