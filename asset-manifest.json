@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/ukuplayee/static/css/main.c61e45c5.css",
-    "main.js": "/ukuplayee/static/js/main.9d8e99af.js",
+    "main.css": "/ukuplayee/static/css/main.47510dea.css",
+    "main.js": "/ukuplayee/static/js/main.5ba31945.js",
     "static/js/787.e5f61659.chunk.js": "/ukuplayee/static/js/787.e5f61659.chunk.js",
     "static/media/fret.jpg": "/ukuplayee/static/media/fret.925955cf3e6c734ad394.jpg",
     "static/media/logo.svg": "/ukuplayee/static/media/logo.77ee1491d5865d70e9669fe0927d8f34.svg",
     "index.html": "/ukuplayee/index.html",
-    "main.c61e45c5.css.map": "/ukuplayee/static/css/main.c61e45c5.css.map",
-    "main.9d8e99af.js.map": "/ukuplayee/static/js/main.9d8e99af.js.map",
+    "main.47510dea.css.map": "/ukuplayee/static/css/main.47510dea.css.map",
+    "main.5ba31945.js.map": "/ukuplayee/static/js/main.5ba31945.js.map",
     "787.e5f61659.chunk.js.map": "/ukuplayee/static/js/787.e5f61659.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c61e45c5.css",
-    "static/js/main.9d8e99af.js"
+    "static/css/main.47510dea.css",
+    "static/js/main.5ba31945.js"
   ]
 }
