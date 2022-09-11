@@ -1,13 +1,12 @@
-import React from "react"
-import Neck from "./neck"
+import React from "react";
+import PlayingArea from "./playing-area";
 
-const Ukulele = (props) => {
-    
+const Ukulele = (props) => {    
     return (
         <div className="ukulele">
-            <Neck/>
+            <PlayingArea/>
         </div>
-    )
-}
+    );
+};
 
 export default Ukulele;

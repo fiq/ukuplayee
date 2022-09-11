@@ -4,7 +4,7 @@ import './fret.css'
 import * as Generator  from "../generator";
 import { getNoteName } from "../generator";
 import strumContext from "./strum-context";
-import { debounce, indexOf } from "underscore";
+import { debounce } from "underscore";
 
 // FIXME - add a string parent to reduce complexity
 const Fret = (props) => {
@@ -15,7 +15,7 @@ const Fret = (props) => {
     const note = getNoteName(props["string"], props["fret"]);
 
     const pressedFret = debounce(() => {
-        if (-1 == strumState.fretted[string].indexOf(fret)) {
+        if (-1 === strumState.fretted[string].indexOf(fret)) {
             strumState.fretted[string].push(fret);
             console.debug(`fretting ${fret}`);
             console.debug(strumState);

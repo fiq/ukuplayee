@@ -1,12 +1,9 @@
-import React, { useContext } from "react"
+import React from "react";
+import Fret from "./fret";
 import "./neck.css"
-import Fret from "./fret"
-import SoundHole from "./sound-hole";
-import strumContext from "./strum-context";
 
-const maxFrets = 4;
-const Neck = () => {
-    const strumState = useContext(strumContext);
+const Neck = (props) => {
+    const maxFrets = props.maxFrets || 4;
 
     const renderFretBoard = () => {
         const frets = [];
@@ -19,28 +16,12 @@ const Neck = () => {
         return frets;
     }
 
-    const renderOpenStrings = () => {
-        const opens = [];
-        for (let string = 4; string > 0; string--) {
-            opens.push(<Fret isOpen={true} string={string} fret={0} />)
-        }
-        return opens;
-    }
-
     return (
-        <strumContext.Provider value={strumState}>
-
             <div className="neck">
                 {renderFretBoard()}
-
-                <SoundHole>
-                    {renderOpenStrings()}
-                </SoundHole>
             </div>
 
-        </strumContext.Provider>
-
-    )
+    );
 };
 
 export default Neck;
