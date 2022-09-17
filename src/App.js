@@ -4,12 +4,13 @@ import Ukulele from './components/ukulele';
 import {PreventOrientation} from 'prevent-orientation';
 
 function App() {
+  const orientationLock =new PreventOrientation();
+  orientationLock.preventLandscape();
 
-  new PreventOrientation().preventLandscape();
-  return (
+ return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo"/>
       </header>
       <Ukulele/>
     </div>

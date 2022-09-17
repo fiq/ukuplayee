@@ -1,5 +1,5 @@
-import React, { useContext } from "react"
-import "./playing-area.css"
+import React, { useContext } from "react";
+import "./playing-area.css";
 import Neck from "./neck";
 import SoundHole from "./sound-hole";
 import strumContext from "./strum-context";
@@ -12,7 +12,6 @@ const PlayingArea = (props) => {
 
     return (
         <strumContext.Provider value={strumState}>
-
             <div className="playing-area">
                 <Neck maxFrets={maxFrets}/>
                 <SoundHole maxFrets={maxFrets}/>

@@ -1,13 +1,13 @@
 .sound-hole {
     min-width: 100%;
-    max-height: 800px;
+    min-height: 24vh;
+    max-height: 24vh;
     display: flex;
     flex-wrap: wrap;
 }
 
-
 .sound-hole-canvas {
-    min-height: 20%;
+    min-height: 22vh;
     display:block;
     position:absolute;
     width: 100%;
