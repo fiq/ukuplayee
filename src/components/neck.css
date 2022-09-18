@@ -1,5 +1,6 @@
 .neck {
     background-image: linear-gradient(to bottom right, rgb(192, 112, 55), rgba(44, 18, 1, 0.801));
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     min-height: 400px;
