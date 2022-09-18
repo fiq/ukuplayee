@@ -1,10 +1,14 @@
-
-
-body {
-  height: auto;
-  width: auto;
-  max-height: 100vh;
-  max-width: 100vh;
+:root {
   overflow: hidden;
-  margin: 0;
+  position: relative;
 }
+
+html {
+  display: block;
+  position: absolute;
+  white-space: nowrap;
+  margin: 0;
+  overflow: hidden;
+  height: 90%;
+}
+
