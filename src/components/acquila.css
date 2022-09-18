@@ -1,14 +1,17 @@
 .acquila {
     z-index: 2;
-    display: block;
     margin-left: auto;
     margin-right: auto;
     max-width: 0px;
-    height: 100%;
-    border-right: 3px solid whitesmoke;
+    height: 60%;
+    /**
+    border-right: 1px solid whitesmoke;
     border-left: 1px solid grey;
+    **/
 };
 
 .string-canvas {
+    z-index: 3;
+    display:block;
     position: absolute;
 }

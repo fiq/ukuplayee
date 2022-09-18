@@ -6,9 +6,12 @@ import { getNoteName } from "../generator";
 import strumContext from "./strum-context";
 import { debounce } from "underscore";
 
-// FIXME - add a string parent to reduce complexity
+// FIXME - Major refactor required - split out string interactions into a non-display component
 const Fret = (props) => {
     const [lastPlayed, setLastPlayed] = useState("[🎵]");
+    const [isPlaying, setPlaying] = useState(false);
+    const [isPressed, setPressed] = useState(false);
+
     const string = props["string"];
     const fret = props["fret"];
     const strumState = useContext(strumContext);
@@ -19,11 +22,17 @@ const Fret = (props) => {
     };
 
     const debouncedPlay = debounce(async (string, fret, opts={}) => {
+        setPlaying(true);
         await Generator.play(string, fret, opts);
+        setTimeout(()=>{
+            setPlaying(false);
+            setPressed(false);
+        }, 300);
         console.debug(`Completed strumming ${string} on ${note}`);        
     }, 5);
 
     const pressFret = async () => {
+        setPressed(true);
         strumState.fretState[string-1][fret] = 1;
         console.debug(strumState);
         console.log(`Setting string ${string} at fret ${fret}`);
@@ -31,7 +40,6 @@ const Fret = (props) => {
         if ([!props.isOpen]) {
             console.debug(`fretting ${fret}`);
             debouncedPlay(props["string"], props["fret"], { muted: true });
-            //setTimeout(releaseCurrentFret, 4000);    
         }
     };
 
@@ -48,6 +56,7 @@ const Fret = (props) => {
     const play = async (event) => {
         console.log(event);
         await pressFret();
+
         if (!props.isOpen) {
             return;
         } 
@@ -66,6 +75,7 @@ const Fret = (props) => {
     };
 
     const releaseFret = (string, fret) => {
+        setPressed(false);
         strumState.fretState[string-1][fret] = 0;
         setLastPlayed(getFormattedNote(string, 0));
         console.debug(`Released fret ${fret} on string ${string}`);
@@ -84,12 +94,13 @@ const Fret = (props) => {
     const releaseCurrentFret = debounce(async () => releaseFret(string, fret), 10, true);
     const debounceReleaseFret = () => {
         releaseCurrentFret();
+        setTimeout(()=>setPressed(false), 500);
     };
 
     return (
         <div id={`fret-${fret}-string-${string}`} className={props.isOpen ? "fret-open" : "fret"} onClick={debouncePlay} onTouchStart={debouncePlay} onTouchMove={strum} onTouchEnd={debounceReleaseFret} onTouchCancel={debounceReleaseFret} fret={fret} string={string}>
             {props.isOpen ? <p className="note-strum">{note} {lastPlayed}</p> : <p className="note-fret">{note}</p>}
-            <Acquila />
+            <Acquila pressed={isPressed} playing={isPlaying}/>
         </div>
     )
 }
